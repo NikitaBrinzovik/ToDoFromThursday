@@ -6,14 +6,13 @@ export default {
 }
 
 
-
 export const GetTodolistsExample = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         todolistAPI.getTodos()
             .then((res) => {
-            setState((res.data[0].id))
-        })
+                setState((res.data[0].id))
+            })
         /*
          // здесь мы будем делать запрос и ответ закидывать в стейт.
          let promise = axios.get(baseURL, {
@@ -59,8 +58,8 @@ export const DeleteTodlistExample = () => {
         let id = "803e05c5-af91-4a6c-a3c4-e4cc41b44488"
         todolistAPI.deleteTodo(id)
             .then((res) => {
-            setState(res.data)
-        })
+                setState(res.data)
+            })
         /*let promise = axios.delete(
             `https://social-network.samuraijs.com/api/1.1/todo-lists/${"6c9e3a27-0c2a-4820-ae30-6bea2a31929e"}`,
             {
@@ -82,8 +81,8 @@ export const UpdateTodolistTitle = () => {
         const title = "hello"
         todolistAPI.updateTodo(id, title)
             .then((res) => {
-            setState((res.data))
-        })
+                setState((res.data))
+            })
 
         /*let promise = axios.put(
             `https://social-network.samuraijs.com/api/1.1/todo-lists/${"803e05c5-af91-4a6c-a3c4-e4cc41b44488"}`,
