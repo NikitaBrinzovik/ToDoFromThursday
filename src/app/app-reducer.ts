@@ -1,7 +1,7 @@
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
-//ststus === loading - показываем крутилку
-//ststus === 'idle' |  'succeeded' | 'failed' - hide крутилку
+//status === loading - показываем крутилку
+//status === 'idle' |  'succeeded' | 'failed' - hide крутилку
 const initialState = {
     status: 'idle' as RequestStatusType,
     error: "error text" as null | string
@@ -22,9 +22,7 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
     }
 }
 
-
 export const setAppStatusAC = (status:RequestStatusType) => ({type :'APP/SET-STATUS',status} as const)
-
 export const setAppErrorAC = (error:null | string) => ({type: 'APP/SET_ERROR',error} as const)
 
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>

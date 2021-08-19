@@ -3,6 +3,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelTyp
 import {Dispatch} from 'redux'
 import {AppRootStateType} from '../../app/store'
 import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
+import {AxiosError} from "axios";
 
 const initialState: TasksStateType = {}
 
@@ -62,6 +63,10 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsT
 
             dispatch(setAppStatusAC('succeeded'))
         })
+        .catch((err: AxiosError) => {
+            dispatch(setAppErrorAC(err.message))
+            dispatch(setAppStatusAC('failed'))
+        })
 }
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'))
@@ -71,12 +76,24 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
             dispatch(action)
             dispatch(setAppStatusAC('succeeded'))
         })
+        .catch((err: AxiosError) => {
+            dispatch(setAppErrorAC(err.message))
+            dispatch(setAppStatusAC('failed'))
+        })
+}
+
+enum ResponsesStatuses {
+    succeeded = 0,//можно писать самому, либо шторм покажет (см ниже)
+    error ,
+    captcha = 10,
 }
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'))
     todolistsAPI.createTask(todolistId, title)
         .then(res => {
-            if (res.data.resultCode === 0) {
+            //if (res.data.resultCode === 0) { дописали enum чтоб было более читаемо
+            if (res.data.resultCode === ResponsesStatuses.succeeded) {
+                //dispatch(setAppStatusAC('succeeded')) -теперь в finally
                 const task = res.data.data.item
                 const action = addTaskAC(task)
                 dispatch(action)
@@ -84,17 +101,21 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
                 //dispatch(setAppStatusAC('succeeded'))
 
             } else {
-                if (res.data.messages.length){
+                if (res.data.messages.length) {
                     dispatch(setAppErrorAC(res.data.messages[0]))
-                }
-                else {
+                } else {
                     dispatch(setAppErrorAC('eeeeeeeee'))
                 }
-                //dispatch(setAppStatusAC('rtwgfsgfgsdgsdfg'))
 
+                //dispatch(setAppStatusAC('failed')) --теперь в finally
             }
-            dispatch(setAppStatusAC('failed'))
+
         })
+        .catch((err: AxiosError) => {
+            dispatch(setAppErrorAC(err.message))
+            //dispatch(setAppStatusAC('failed'))-теперь в finally
+        })
+        .finally(() => { dispatch(setAppStatusAC('succeeded'))})
 
 }
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
@@ -123,6 +144,10 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
             .then(res => {
                 const action = updateTaskAC(taskId, domainModel, todolistId)
                 dispatch(action)
+            })
+            .catch((err: AxiosError) => {
+                dispatch(setAppErrorAC(err.message))
+                dispatch(setAppStatusAC('failed'))
             })
     }
 

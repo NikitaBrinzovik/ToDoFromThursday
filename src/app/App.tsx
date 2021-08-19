@@ -10,7 +10,7 @@ import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 
 function App() {
-    //state всего приложения, вторым возвращ
+    //1-state всего приложения, вторым- что возвращ
     const status = useSelector<AppRootStateType, RequestStatusType>( (state) => state.app.status)
 
     return (
