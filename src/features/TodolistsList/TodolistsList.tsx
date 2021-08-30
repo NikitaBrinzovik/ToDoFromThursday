@@ -82,7 +82,7 @@ export const TodolistsList: React.FC = () => {
                                 id={tl.id}
                                 title={tl.title}
                                 filter={tl.filter}
-                                entityStatus = {tl.entityStatus}
+                                entityStatus={tl.entityStatus}
                                 tasks={allTodolistTasks}
                                 removeTask={removeTask}
                                 changeFilter={changeFilter}

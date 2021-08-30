@@ -84,9 +84,10 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
 
 enum ResponsesStatuses {
     succeeded = 0,//можно писать самому, либо шторм покажет (см ниже)
-    error ,
+    error,
     captcha = 10,
 }
+
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'))
     todolistsAPI.createTask(todolistId, title)
@@ -115,7 +116,9 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
             dispatch(setAppErrorAC(err.message))
             //dispatch(setAppStatusAC('failed'))-теперь в finally
         })
-        .finally(() => { dispatch(setAppStatusAC('succeeded'))})
+        .finally(() => {
+            dispatch(setAppStatusAC('succeeded'))
+        })
 
 }
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
