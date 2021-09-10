@@ -21,9 +21,6 @@ function App() {
                 {status === "loading" && <LinearProgress color={"secondary"}/>}
                 {/*если лоадинг, то крутилка*/}
 
-
-                {/*<LinearProgress variant="determinate" value={normalise(props.value)} />*/}
-
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <Menu/>
