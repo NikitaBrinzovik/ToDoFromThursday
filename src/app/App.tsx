@@ -10,16 +10,15 @@ import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 
 function App() {
-    //1-state всего приложения, вторым- что возвращ
+    //1 аргумент у useSelector-всегда state всего приложения, вторым- что возвращ этот хук
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
 
     return (
         <div className="App">
             <AppBar position="static">
 
-
-                {status === "loading" && <LinearProgress color={"secondary"}/>}
                 {/*если лоадинг, то крутилка*/}
+                {status === "loading" && <LinearProgress color={"secondary"}/>}
 
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
