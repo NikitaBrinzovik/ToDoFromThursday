@@ -9,21 +9,23 @@ import {
 } from "../../app/app-reducer";
 import {AxiosError} from "axios";
 
+//imports-->initialState-->Reducer-->actions-->thunks-->types
+
 //initialState
 const initialState: Array<TodolistDomainType> = []
 
 //Reducer
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionsType): Array<TodolistDomainType> => {
     switch (action.type) {
-        case 'SET-TODOLISTS':
+        case 'SET_TODOLISTS':
             return action.todolists.map(tl => ({...tl, filter: 'all', entityStatus: "idle"}))
-        case 'REMOVE-TODOLIST':
+        case 'REMOVE_TODOLIST':
             return state.filter(tl => tl.id !== action.id)
-        case 'ADD-TODOLIST':
+        case 'ADD_TODOLIST':
             return [{...action.todolist, filter: 'all', entityStatus: "idle"}, ...state]
-        case 'CHANGE-TODOLIST-TITLE':
+        case 'CHANGE_TODOLIST_TITLE':
             return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
-        case 'CHANGE-TODOLIST-FILTER':
+        case 'CHANGE_TODOLIST_FILTER':
             return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
         case "CHANGE_TODOLIST_ENTITY_STATUS":
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl)
@@ -34,19 +36,19 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
 }
 
 // actions------------
-export const removeTodolistAC = (id: string) => ({type: 'REMOVE-TODOLIST', id} as const)
-export const addTodolistAC = (todolist: TodolistType) => ({type: 'ADD-TODOLIST', todolist} as const)
+export const removeTodolistAC = (id: string) => ({type: 'REMOVE_TODOLIST', id} as const)
+export const addTodolistAC = (todolist: TodolistType) => ({type: 'ADD_TODOLIST', todolist} as const)
 export const changeTodolistTitleAC = (id: string, title: string) => ({
-    type: 'CHANGE-TODOLIST-TITLE',
+    type: 'CHANGE_TODOLIST_TITLE',
     id,
     title
 } as const)
 export const changeTodolistFilterAC = (id: string, filter: FilterValuesType) => ({
-    type: 'CHANGE-TODOLIST-FILTER',
+    type: 'CHANGE_TODOLIST_FILTER',
     id,
     filter
 } as const)
-export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET-TODOLISTS', todolists} as const)
+export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET_TODOLISTS', todolists} as const)
 export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestStatusType) => {
     return {
         type: "CHANGE_TODOLIST_ENTITY_STATUS",

@@ -9,30 +9,30 @@ const initialState: TasksStateType = {}
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
     switch (action.type) {
-        case 'REMOVE-TASK':
+        case 'REMOVE_TASK':
             return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)}
-        case 'ADD-TASK':
+        case 'ADD_TASK':
             return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
-        case 'UPDATE-TASK':
+        case 'UPDATE_TASK':
             return {
                 ...state,
                 [action.todolistId]: state[action.todolistId]
                     .map(t => t.id === action.taskId ? {...t, ...action.model} : t)
             }
-        case 'ADD-TODOLIST':
+        case 'ADD_TODOLIST':
             return {...state, [action.todolist.id]: []}
-        case 'REMOVE-TODOLIST':
+        case 'REMOVE_TODOLIST':
             const copyState = {...state}
             delete copyState[action.id]
             return copyState
-        case 'SET-TODOLISTS': {
+        case 'SET_TODOLISTS': {
             const copyState = {...state}
             action.todolists.forEach(tl => {
                 copyState[tl.id] = []
             })
             return copyState
         }
-        case 'SET-TASKS':
+        case 'SET_TASKS':
             return {...state, [action.todolistId]: action.tasks}
         default:
             return state
@@ -41,13 +41,13 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
 
 // actions
 export const removeTaskAC = (taskId: string, todolistId: string) =>
-    ({type: 'REMOVE-TASK', taskId, todolistId} as const)
+    ({type: 'REMOVE_TASK', taskId, todolistId} as const)
 export const addTaskAC = (task: TaskType) =>
-    ({type: 'ADD-TASK', task} as const)
+    ({type: 'ADD_TASK', task} as const)
 export const updateTaskAC = (taskId: string, model: UpdateDomainTaskModelType, todolistId: string) =>
-    ({type: 'UPDATE-TASK', model, todolistId, taskId} as const)
+    ({type: 'UPDATE_TASK', model, todolistId, taskId} as const)
 export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
-    ({type: 'SET-TASKS', tasks, todolistId} as const)
+    ({type: 'SET_TASKS', tasks, todolistId} as const)
 
 // thunks
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
@@ -94,12 +94,11 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
         .then(res => {
             //if (res.data.resultCode === 0) { дописали enum чтоб было более читаемо
             if (res.data.resultCode === ResponsesStatuses.succeeded) {
-                //dispatch(setAppStatusAC('succeeded')) -теперь в finally
+
                 const task = res.data.data.item
                 const action = addTaskAC(task)
                 dispatch(action)
-                //dispatch()
-                //dispatch(setAppStatusAC('succeeded'))
+                //dispatch(setAppStatusAC('succeeded'))-теперь в finally
 
             } else {
                 if (res.data.messages.length) {
@@ -107,7 +106,6 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
                 } else {
                     dispatch(setAppErrorAC('eeeeeeeee'))
                 }
-
                 //dispatch(setAppStatusAC('failed')) --теперь в finally
             }
 

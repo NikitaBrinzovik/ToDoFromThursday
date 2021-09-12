@@ -10,9 +10,12 @@ function Alert(props: AlertProps) {
 }
 
 export function ErrorSnackbar() {
-    //const [open, setOpen] = React.useState(true)
+    //const [open, setOpen] = React.useState(true) -был не контролируемый, переписал логику
     const dispatch = useDispatch()
+
+    //<стейт всего приложения, то что будет возвращаться>(то. что нужно достать)
     const error = useSelector<AppRootStateType, null |string>(state => state.app.error)
+
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return
@@ -22,7 +25,7 @@ export function ErrorSnackbar() {
     }
 
     return (
-        <Snackbar open={error !== null} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar open={error !== null} autoHideDuration={5000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error">
                 {error}
             </Alert>
