@@ -8,6 +8,7 @@ import {
     SetAppStatusActionType
 } from "../../app/app-reducer";
 import {AxiosError} from "axios";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 //imports-->initialState-->Reducer-->actions-->thunks-->types
 
@@ -107,19 +108,21 @@ export const addTodolistTC = (title: string) => {
                     dispatch(addTodolistAC(res.data.data.item))
                     dispatch(setAppStatusAC('succeeded'))
                 } else {
-                    if (res.data.messages.length) {
+                    /*if (res.data.messages.length) {
                         dispatch(setAppErrorAC(res.data.messages[0]))
                     } else {
                         dispatch(setAppErrorAC('eeeeeeeee'))
                     }
 
-                    dispatch(setAppStatusAC('failed'))
+                    dispatch(setAppStatusAC('failed'))*/
+                    handleServerAppError<{item:TodolistType}>(dispatch,res.data)
                 }
 
             })
             .catch((err: AxiosError) => {
-                dispatch(setAppErrorAC(err.message))
-                dispatch(setAppStatusAC('failed'))
+                /*dispatch(setAppErrorAC(err.message))
+                dispatch(setAppStatusAC('failed'))*/
+                handleServerNetworkError(dispatch, err.message)
             })
     }
 }

@@ -1,9 +1,17 @@
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType} from './todolists-reducer'
-import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from '../../api/todolists-api'
+import {
+    TaskPriorities,
+    TaskStatuses,
+    TaskType,
+    todolistsAPI,
+    TodolistType,
+    UpdateTaskModelType
+} from '../../api/todolists-api'
 import {Dispatch} from 'redux'
 import {AppRootStateType} from '../../app/store'
 import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
 import {AxiosError} from "axios";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 const initialState: TasksStateType = {}
 
@@ -82,6 +90,9 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
         })
 }
 
+//используем enam для читаемости кода. теперь в санках будет не просто число, а понятное описание,
+// на пример сейчас реализованно несколько строками ниже,
+// такой код: if (res.data.resultCode === ResponsesStatuses.succeeded) {
 enum ResponsesStatuses {
     succeeded = 0,//можно писать самому, либо шторм покажет (см ниже)
     error,
@@ -95,27 +106,30 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
             //if (res.data.resultCode === 0) { дописали enum чтоб было более читаемо
             if (res.data.resultCode === ResponsesStatuses.succeeded) {
 
-                const task = res.data.data.item
-                const action = addTaskAC(task)
+                const action = addTaskAC(res.data.data.item)
                 dispatch(action)
-                //dispatch(setAppStatusAC('succeeded'))-теперь в finally
+                dispatch(setAppStatusAC('succeeded'))//уже нет..-теперь в finally
 
             } else {
-                if (res.data.messages.length) {
+                /*if (res.data.messages.length) {
                     dispatch(setAppErrorAC(res.data.messages[0]))
                 } else {
                     dispatch(setAppErrorAC('eeeeeeeee'))
                 }
-                //dispatch(setAppStatusAC('failed')) --теперь в finally
+                //dispatch(setAppStatusAC('failed')) --теперь в finally*/
+
+                handleServerAppError<{item:TodolistType}>(dispatch,res.data)
             }
 
         })
         .catch((err: AxiosError) => {
-            dispatch(setAppErrorAC(err.message))
-            //dispatch(setAppStatusAC('failed'))-теперь в finally
-        })
-        .finally(() => {
-            dispatch(setAppStatusAC('succeeded'))
+            /*    dispatch(setAppErrorAC(err.message))
+                //dispatch(setAppStatusAC('failed'))-теперь в finally
+            })
+            .finally(() => {
+                dispatch(setAppStatusAC('succeeded'))
+            })*/
+            handleServerNetworkError(dispatch, err.message)
         })
 
 }
