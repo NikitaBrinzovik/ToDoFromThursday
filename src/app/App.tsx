@@ -8,7 +8,7 @@ import {useSelector} from 'react-redux'
 import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 
 function App() {
@@ -41,9 +41,11 @@ function App() {
                         //demo={demo}
                     />}/>
                     <Route path={'/login'} render={() => <Login/>}/>
-                    <Route path={'/*'} render={() =>
+                    {/*страница ввода неправильного url (err 404)*/}
+                    <Route path={'/404'} render={() =>
                         <h1 style={{'textAlign': 'center', 'fontSize': '50px'}}>404 page not found</h1>}/>
-
+                    {/* если свитч не попал ни в один роут, то подхватим редиректом и отправим на стр ошибки*/}
+                    <Redirect to={'/404'} from={'*'}/>
                 </Switch>
                 <TodolistsList/>
             </Container>
