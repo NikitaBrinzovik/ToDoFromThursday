@@ -47,7 +47,7 @@ function App() {
                     {/* если свитч не попал ни в один роут, то подхватим редиректом и отправим на стр ошибки*/}
                     <Redirect to={'/404'} from={'*'}/>
                 </Switch>
-                <TodolistsList/>
+                
             </Container>
         </div>
     )
