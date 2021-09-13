@@ -12,8 +12,24 @@ export const Login = () => {
             password: '',
             rememberMe: false,
         },
+        validate: (values) => {
+            const errors: FormikErrorType = {};
+            if (!values.email) {
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
+            }
+            if (!values.password) {
+                errors.password = 'Введите пароль. Обязательное поле';
+            } else if (values.password.length < 3) {
+                errors.password = 'Пароль должен быть больше 3 символов';
+            }
+
+            return errors;
+        },
         onSubmit: values => {
             alert(JSON.stringify(values, null,2))
+            formik.resetForm();// зачистить поля после подтверждения формы
         }
     })
 
@@ -41,30 +57,44 @@ export const Login = () => {
                         <TextField
                             label="Email"
                             margin="normal"
+
                             //для формика:
                             type="email"
+
+                            /*этот код заменим на короткую запись - см 6строчек ниже
                             name="email"
                             onChange={formik.handleChange}
                             value={formik.values.email}
+                            //доп для валидации
+                            onBlur={formik.handleBlur}*/
+                            {...formik.getFieldProps('email')}
                         />
+                        {/*VALIDATION: если поле тронутое, но ввод не закончен & если невалидный ввод*/}
+                        {formik.touched.email && formik.errors.email &&
+                        <div style={{"color": "red"}}>{formik.errors.email}</div>}
+
                         <TextField
                             type="password"
                             label="Password"
                             margin="normal"
+
+                            /*этот код заменим на короткую запись- см 7строчек ниже
                             //для формика:
                             name="password"
                             onChange={formik.handleChange}
                             value={formik.values.password}
+                            //доп для валидации
+                            onBlur={formik.handleBlur}*/
+                            {...formik.getFieldProps('password')}
                         />
+                        {/*VALIDATION*/}
+                        {formik.touched.password && formik.errors.password &&
+                        <div style={{"color": "red"}}>{formik.errors.password}</div>}
+
+
                         <FormControlLabel
                             label={'Remember me'}
-                            control={<Checkbox
-                                //для формика:
-                                name="rememberMe"
-                                onChange={formik.handleChange}
-                                checked={formik.values.rememberMe}
-                            />}
-
+                            control={<Checkbox {...formik.getFieldProps('rememberMe')}/>}
                         />
                         <Button type={'submit'} variant={'contained'} color={'primary'}>Login</Button>
                     </FormGroup>
@@ -73,4 +103,11 @@ export const Login = () => {
             </FormControl>
         </Grid>
     </Grid>
+}
+
+//---------TYPES------------
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
 }
