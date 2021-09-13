@@ -8,6 +8,8 @@ import {useSelector} from 'react-redux'
 import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import {Route, Switch} from "react-router-dom";
+import {Login} from "../features/Login/Login";
 
 function App() {
     //1 аргумент у useSelector-всегда state всего приложения, вторым- что возвращ этот хук
@@ -33,6 +35,16 @@ function App() {
                 <ErrorSnackbar/>
             </AppBar>
             <Container fixed>
+                <Switch>
+
+                    <Route exact path={'/'} render={() => <TodolistsList
+                        //demo={demo}
+                    />}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Route path={'/*'} render={() =>
+                        <h1 style={{'textAlign': 'center', 'fontSize': '50px'}}>404 page not found</h1>}/>
+
+                </Switch>
                 <TodolistsList/>
             </Container>
         </div>
