@@ -2,8 +2,15 @@ import React from 'react'
 //переписать все импорты грамматно: из библиотек тянуть только нужные файлы
 import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid} from '@material-ui/core'
 import {useFormik} from "formik";
+import {useDispatch, useSelector} from "react-redux";
+import {loginTC} from "./auth-Reducer";
+import { AppRootStateType } from '../../app/store';
+import {Redirect} from "react-router-dom";
 
 export const Login = () => {
+    const dispatch = useDispatch()
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
 
     // lib FORMIK
     const formik = useFormik({
@@ -28,12 +35,16 @@ export const Login = () => {
             return errors;
         },
         onSubmit: values => {
-            alert(JSON.stringify(values, null,2))
+            dispatch(loginTC(values))
+            //alert(JSON.stringify(values, null,2))
             formik.resetForm();// зачистить поля после подтверждения формы
         }
     })
 
-
+    //проверка на залогиненость и возможный редирект
+    if(isLoggedIn) {
+        return <Redirect to={'/'}/>
+    }
 
 
     //lib material-ui
