@@ -115,7 +115,7 @@ export const addTodolistTC = (title: string) => {
                     }
 
                     dispatch(setAppStatusAC('failed'))*/
-                    handleServerAppError<{item:TodolistType}>(dispatch,res.data)
+                    handleServerAppError<{ item: TodolistType }>(dispatch, res.data)
                 }
 
             })

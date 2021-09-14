@@ -21,18 +21,18 @@ function App() {
     useEffect(() => {
         dispatch(initializeAppTC())
     }, [])
-    
-    const  logoutHandler = () => {
-      dispatch(logoutTC())
+
+    const logoutHandler = () => {
+        dispatch(logoutTC())
     }
-    
+
     if (!isInitialized) {
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
     }
-    
+
     return (
         <div className="App">
             <AppBar position="static">
