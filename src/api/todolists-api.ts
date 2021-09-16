@@ -15,7 +15,7 @@ const instance = axios.create({
 export const todolistsAPI = {
     getTodolists() {
         const promise = instance.get<TodolistType[]>('todo-lists');
-        return promise;
+        return promise;//можно сократить до 1 строчки, оставил для читаемости
     },
     createTodolist(title: string) {
         const promise = instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title: title});

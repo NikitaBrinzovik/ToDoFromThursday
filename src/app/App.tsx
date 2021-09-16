@@ -26,7 +26,7 @@ function App() {
         dispatch(logoutTC())
     }
 
-    if (!isInitialized) {
+    if (!isInitialized) {//крутилка
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
@@ -62,6 +62,7 @@ function App() {
                         //demo={demo}
                     />}/>
                     <Route path={'/login'} render={() => <Login/>}/>
+
                     {/*страница ввода неправильного url (err 404)*/}
                     <Route path={'/404'} render={() =>
                         <h1 style={{'textAlign': 'center', 'fontSize': '50px'}}>404 page not found</h1>}/>

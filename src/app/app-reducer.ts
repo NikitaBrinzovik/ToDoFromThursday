@@ -8,7 +8,6 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 const initialState = {
     status: 'idle' as RequestStatusType,
     error: null as null | string,
-    //error: "error text" as null | string
     isInitialized: false,
 }
 
@@ -34,7 +33,6 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC(true));
             }
-            //else {}
         })
         .finally(() => {
             dispatch(setIsInitializedAC(true))
