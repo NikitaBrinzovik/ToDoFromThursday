@@ -71,7 +71,7 @@ function App() {
                         <h1 style={{'textAlign': 'center', 'fontSize': '50px'}}>404 page
                             not found</h1>}/>
 
-                    <Redirect to={'/404'} from={'*'}/>
+                    {/*<Redirect to={'/404'} from={'*'}/>*/}
                 </Switch>
 
             </Container>
