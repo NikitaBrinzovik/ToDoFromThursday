@@ -31,10 +31,14 @@ body .MuiGrid-spacing-xs-3 {
 }
 
 body .MuiPaper-elevation1{
-  opacity: 0.7;
+  color: #010b2f;
+  opacity: 0.8;
 }
-.MuiToolbar-root {
+body .MuiToolbar-root {
   background-color: rgba(82, 183, 150, 0.79);
-  /*background-color: rgba(82, 183, 150, 0.87);*/
+}
 
+.MuiFormLabel-root p{
+  color: #010b2f;
+  font-weight: bold;
 }

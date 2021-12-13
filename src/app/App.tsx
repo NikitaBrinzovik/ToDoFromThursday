@@ -1,5 +1,13 @@
 import React, {useEffect} from 'react'
-import {AppBar, Button, CircularProgress, Container, IconButton, Toolbar, Typography} from '@material-ui/core'
+import {
+    AppBar,
+    Button,
+    CircularProgress,
+    Container,
+    IconButton,
+    Toolbar,
+    Typography
+} from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import {Menu} from '@material-ui/icons'
 import {TodolistsList} from '../features/TodolistsList/TodolistsList'
@@ -25,7 +33,7 @@ function App() {
         dispatch(logoutTC())
     }
 
-    if (!isInitialized) {//крутилка
+    if (!isInitialized) {
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
@@ -36,7 +44,6 @@ function App() {
         <div className="App">
             <AppBar position="static">
 
-                {/*если лоадинг, то крутилка*/}
                 {status === "loading" && <LinearProgress color={"secondary"}/>}
 
                 <Toolbar>
@@ -48,7 +55,8 @@ function App() {
                     </Typography>
 
                     {/*если залогинен, то кнопка рвзлог*/}
-                    {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Logout</Button>}
+                    {isLoggedIn &&
+                    <Button color="inherit" onClick={logoutHandler}>Logout</Button>}
 
                 </Toolbar>
 
@@ -57,15 +65,12 @@ function App() {
             <Container fixed>
                 <Switch>
 
-                    <Route exact path={'/'} render={() => <TodolistsList
-                        //demo={demo}
-                    />}/>
+                    <Route exact path={'/'} render={() => <TodolistsList/>}/>
                     <Route path={'/login'} render={() => <Login/>}/>
-
-                    {/*страница ввода неправильного url (err 404)*/}
                     <Route path={'/404'} render={() =>
-                        <h1 style={{'textAlign': 'center', 'fontSize': '50px'}}>404 page not found</h1>}/>
-                    {/* если свитч не попал ни в один роут, то подхватим редиректом и отправим на стр ошибки*/}
+                        <h1 style={{'textAlign': 'center', 'fontSize': '50px'}}>404 page
+                            not found</h1>}/>
+
                     <Redirect to={'/404'} from={'*'}/>
                 </Switch>
 
