@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/ToDoFromThursday/static/css/main.1705a2ab.chunk.css",
+    "main.js": "/ToDoFromThursday/static/js/main.25ced085.chunk.js",
+    "main.js.map": "/ToDoFromThursday/static/js/main.25ced085.chunk.js.map",
+    "runtime-main.js": "/ToDoFromThursday/static/js/runtime-main.49a868c8.js",
+    "runtime-main.js.map": "/ToDoFromThursday/static/js/runtime-main.49a868c8.js.map",
+    "static/js/2.a253083a.chunk.js": "/ToDoFromThursday/static/js/2.a253083a.chunk.js",
+    "static/js/2.a253083a.chunk.js.map": "/ToDoFromThursday/static/js/2.a253083a.chunk.js.map",
+    "static/js/3.29856cd9.chunk.js": "/ToDoFromThursday/static/js/3.29856cd9.chunk.js",
+    "static/js/3.29856cd9.chunk.js.map": "/ToDoFromThursday/static/js/3.29856cd9.chunk.js.map",
+    "index.html": "/ToDoFromThursday/index.html",
+    "static/css/main.1705a2ab.chunk.css.map": "/ToDoFromThursday/static/css/main.1705a2ab.chunk.css.map",
+    "static/js/2.a253083a.chunk.js.LICENSE.txt": "/ToDoFromThursday/static/js/2.a253083a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.49a868c8.js",
+    "static/js/2.a253083a.chunk.js",
+    "static/css/main.1705a2ab.chunk.css",
+    "static/js/main.25ced085.chunk.js"
+  ]
+}
